@@ -2,10 +2,12 @@ import express from "express";
 import { connectDB } from "./config/db.js";
 import dotenv from "dotenv";
 import path from "path";
+import cors from 'cors';
 import ProductRoutes from "./routes/product.route.js"
 
 dotenv.config();
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 const __dirname = path.resolve();
@@ -29,13 +31,9 @@ if(process.env.NODE_ENV === "production") {
     });
 }
 
-const server = app.listen(PORT, async () => {
-    try {
-        await connectDB();
-        console.log(`Server running on port ${PORT}`);
-    } catch (error) {
-        console.error('Failed to connect to database:', error);
-    }
+app.listen(PORT, () => {
+	connectDB();
+	console.log("Server started at http://localhost:" + PORT);
 });
 
 export default app;
