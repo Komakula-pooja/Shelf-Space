@@ -10,7 +10,10 @@ const app = express();
 
 const __dirname = path.resolve();
 app.use(express.json());
-app.use("/api/products",ProductRoutes)
+app.use("/api/products",(req,res,next)=>{
+    console.log(`Request to ${req.method} ${req.url}`);
+    next();
+})
 
 if(process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));
@@ -19,7 +22,10 @@ if(process.env.NODE_ENV === "production") {
         res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
     });
 
-    app.get("/", (req, res) => res.send("Backend is working!"));
+    app.get("/", (req, res) => {
+        console.log("root route accessed")
+        res.send("Backend is working!")
+    });
 
 }
 
