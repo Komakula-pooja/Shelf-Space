@@ -6,7 +6,7 @@ import ProductRoutes from "./routes/product.route.js"
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 5000;
+
 
 const __dirname = path.resolve();
 app.use(express.json());
@@ -20,9 +20,6 @@ if(process.env.NODE_ENV === "production") {
     });
 }
 
-app.listen(PORT,()=>{
-    connectDB();
-    console.log("server started at port: "+PORT);
-});
+connectDB(); 
 
 export default app;
